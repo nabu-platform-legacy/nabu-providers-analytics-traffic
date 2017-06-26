@@ -1,0 +1,18 @@
+<structure collectionName="httpRequests" name="httpRequest">
+    <field name="id" primaryKey="true" type="java.lang.Long"/>
+    <field name="created" timezone="UTC" type="java.util.Date"/>
+    <field minOccurs="0" name="alias" type="java.lang.String"/>
+    <field name="remoteIp" type="java.lang.String"/>
+    <field minOccurs="0" name="remoteHost" type="java.lang.String"/>
+    <field name="remotePort" type="java.lang.Integer"/>
+    <field name="httpVersion" type="java.lang.Double"/>
+    <field minOccurs="0" name="host" type="java.lang.String"/>
+    <field name="method" type="java.lang.String"/>
+    <field name="target" type="java.lang.String"/>
+    <field minOccurs="0" name="acceptLanguage" type="java.lang.String"/>
+    <field minOccurs="0" name="userAgent" type="java.lang.String"/>
+    <field minOccurs="0" name="referer" type="java.lang.String"/>
+    <field name="server" type="java.lang.String"/>
+    <field minOccurs="0" name="serverGroup" type="java.lang.String"/>
+    <field name="webApplicationId" type="java.lang.String"/>
+</structure>

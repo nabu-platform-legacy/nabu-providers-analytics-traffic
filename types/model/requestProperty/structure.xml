@@ -1,0 +1,6 @@
+<structure collectionName="requestProperties" name="httpRequestProperty">
+    <field name="id" primaryKey="true" type="java.lang.Long"/>
+    <field name="name" type="java.lang.String"/>
+    <field name="content" type="java.lang.String"/>
+    <field name="httpRequestId" type="java.lang.Long"/>
+</structure>

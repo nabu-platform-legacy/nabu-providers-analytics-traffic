@@ -1,0 +1,37 @@
+<jdbcService xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+	<inputDefinition>nabu.providers.analytics.traffic.types.model.request</inputDefinition>
+	<sql>insert into http_requests (
+	created,
+	alias,
+	remote_ip,
+	remote_host,
+	remote_port,
+	http_version,
+	host,
+	method,
+	target,
+	accept_language,
+	user_agent,
+	referer,
+	server,
+	server_group,
+	web_application_id
+) values (
+	:created,
+	:alias,
+	:remoteIp,
+	:remoteHost,
+	:remotePort,
+	:httpVersion,
+	:host,
+	:method,
+	:target,
+	:acceptLanguage,
+	:userAgent,
+	:referer,
+	:server,
+	:serverGroup,
+	:webApplicationId
+)</sql>
+	<generatedColumn>id</generatedColumn>
+</jdbcService>

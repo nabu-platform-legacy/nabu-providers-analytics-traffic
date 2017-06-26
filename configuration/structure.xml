@@ -1,0 +1,7 @@
+<structure name="traffic">
+    <field name="connectionId" type="java.lang.String"/>
+    <structure maxOccurs="unbounded" minOccurs="0" name="captures">
+        <field name="target" type="java.lang.String"/>
+        <structure definition="nabu.utils.types.Property" maxOccurs="unbounded" minOccurs="0" name="variables"/>
+    </structure>
+</structure>
