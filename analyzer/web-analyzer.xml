@@ -2,46 +2,48 @@
 <webAnalyzer>
     <analyses>
         <script>source = user.source()
-configuration = configuration("nabu.providers.analytics.traffic.configuration")
 
-# store the general request metadata
-ids = nabu.providers.analytics.traffic.database.request.insert(connection: configuration/connectionId,
-	parameters: series(structure(
-		created: date(),
-		alias: user.token()/name,
-		remoteIp: source/ip,
-		remoteHost: source/host,
-		remotePort: source/port,
-		httpVersion: request.version(),
-		host: request.header("Host")/content,
-		method: request.method(),
-		target: request.target(),
-		acceptLanguage: request.header("Accept-Language")/content,
-		userAgent: request.header("User-Agent")/content,
-		referer: request.header("Referer")/content,
-		server: nabu.utils.Server.getServerName()/server,
-		serverGroup: nabu.utils.Server.getServerGroup()/group,
-		webApplicationId: environment("webApplicationId")
-	)))/generatedKeys
+if (source != null &amp;&amp; source/ip != null)
+	configuration = configuration("nabu.providers.analytics.traffic.configuration")
 	
-target = request.target()
-captures = filter(lambda(capture, target ~ capture/target), configuration/captures)
-
-if (size(captures) &gt; 0)
-	@meta
-	contentType ?= null
-
-	properties = series()
-
-	content = when(contentType ~ ".*xml.*", xml.objectify(content()), json.objectify(content()))
-	for (capture : captures)
-		for (variable : capture/variables)
-			result = eval(variable/value, content)
-			if (result != null)
-				properties = merge(properties, structure(name: variable/key, content: result, httpRequestId: ids[0]))
+	# store the general request metadata
+	ids = nabu.providers.analytics.traffic.database.request.insert(connection: configuration/connectionId,
+		parameters: series(structure(
+			created: date(),
+			alias: user.token()/name,
+			remoteIp: source/ip,
+			remoteHost: source/host,
+			remotePort: source/port,
+			httpVersion: request.version(),
+			host: request.header("Host")/content,
+			method: request.method(),
+			target: request.target(),
+			acceptLanguage: request.header("Accept-Language")/content,
+			userAgent: request.header("User-Agent")/content,
+			referer: request.header("Referer")/content,
+			server: nabu.utils.Server.getServerName()/server,
+			serverGroup: nabu.utils.Server.getServerGroup()/group,
+			webApplicationId: environment("webApplicationId")
+		)))/generatedKeys
+		
+	target = request.target()
+	captures = filter(lambda(capture, target ~ capture/target), configuration/captures)
 	
-	if (size(properties) &gt; 0)
-		nabu.providers.analytics.traffic.database.request.property.insert(connection: configuration/connectionId, parameters: properties)</script>
+	if (size(captures) &gt; 0)
+		@meta
+		contentType ?= null
+	
+		properties = series()
+	
+		content = when(contentType ~ ".*xml.*", xml.objectify(content()), json.objectify(content()))
+		for (capture : captures)
+			for (variable : capture/variables)
+				result = eval(variable/value, content)
+				if (result != null)
+					properties = merge(properties, structure(name: variable/key, content: result, httpRequestId: ids[0]))
+		
+		if (size(properties) &gt; 0)
+			nabu.providers.analytics.traffic.database.request.property.insert(connection: configuration/connectionId, parameters: properties)</script>
         <timing>NORMAL</timing>
         <title>Log HTTP Request</title>
     </analyses>
