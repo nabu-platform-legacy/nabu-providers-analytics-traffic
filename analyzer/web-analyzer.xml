@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <webAnalyzer>
     <analyses>
-        <script>source = user.source()
+        <script>@nocsrf
+
+source = user.source()
 
 if (source != null &amp;&amp; source/ip != null)
 	configuration = configuration("nabu.providers.analytics.traffic.configuration")
